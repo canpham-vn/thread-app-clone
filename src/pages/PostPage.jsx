@@ -10,6 +10,7 @@ import {
 import { BsThreeDots } from "react-icons/bs";
 import Actions from "../components/Actions";
 import { useState } from "react";
+import Comment from "../components/Comment";
 
 const PostPage = () => {
   const [liked, setLiked] = useState(false);
@@ -69,6 +70,28 @@ const PostPage = () => {
       </Flex>
 
       <Divider my={4} />
+
+      <Comment
+        comment='Looks really good!'
+        createdAt='2d'
+        likes={100}
+        username='Dan Abrahmov'
+        userAvatar='https://bit.ly/dan-abramov'
+      />
+      <Comment
+        comment='This is terrible!'
+        createdAt='3d'
+        likes={102}
+        username='Kola Tioluwani'
+        userAvatar='https://bit.ly/ryan-florence'
+      />
+      <Comment
+        comment='Wow! Amazing good job'
+        createdAt='4d'
+        likes={22}
+        username='Kent Dodds'
+        userAvatar='https://bit.ly/kent-c-dodds'
+      />
     </>
   );
 };
