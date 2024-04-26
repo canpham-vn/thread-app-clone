@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 
 import connectDB from "./db/connectDB.js";
 import userRoutes from "./routes/userRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(cookieParser()); // To get cookies from the request and set cookies insi
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
