@@ -32,8 +32,10 @@ const SignupCard = () => {
     password: "",
   });
   const showToast = useShowToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch("/api/users/signup", {
         method: "POST",
@@ -54,6 +56,8 @@ const SignupCard = () => {
       setUser(data);
     } catch (error) {
       showToast("Error", error, "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -140,6 +144,7 @@ const SignupCard = () => {
                   bg: useColorModeValue("gray.700", "gray.800"),
                 }}
                 onClick={handleSignup}
+                isLoading={isLoading}
               >
                 Sign up
               </Button>
