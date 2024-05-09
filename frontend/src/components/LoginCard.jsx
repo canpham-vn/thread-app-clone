@@ -26,8 +26,10 @@ const LoginCard = () => {
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);
   const showToast = useShowToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch("/api/users/login", {
         method: "POST",
@@ -47,6 +49,8 @@ const LoginCard = () => {
       setUser(data);
     } catch (error) {
       showToast("Error", error, "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -111,6 +115,7 @@ const LoginCard = () => {
                   bg: useColorModeValue("gray.700", "gray.800"),
                 }}
                 onClick={handleLogin}
+                isLoading={isLoading}
               >
                 Login
               </Button>
