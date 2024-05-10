@@ -7,7 +7,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { user } = useRecoilValue(userAtom);
+  const user = useRecoilValue(userAtom);
 
   return (
     <Flex justifyContent={"space-between"} mt={6} mb={12}>

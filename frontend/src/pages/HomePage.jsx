@@ -1,14 +1,50 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Spinner } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useShowToast from "../hooks/useShowToast";
 
 const HomePage = () => {
-  return (
-    <Link to='/markzuckerberg'>
-      <Flex w='full' justifyContent='center'>
-        <Button mx='auto'>Visit Profile Page</Button>
+  const showToast = useShowToast();
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getFeedPosts = async () => {
+      try {
+        const res = await fetch("/api/posts/feed");
+
+        const data = await res.json();
+
+        if (data.error) {
+          showToast("Error", data.error, "error");
+          return;
+        }
+
+        setPosts(data);
+      } catch (error) {
+        showToast("Error", error, "error");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getFeedPosts();
+  }, [showToast]);
+
+  if (isLoading) {
+    return (
+      <Flex justifyContent='center'>
+        <Spinner size='xl' />
       </Flex>
-    </Link>
-  );
+    );
+  }
+
+  if (posts.length === 0) {
+    return <h1>Follow some users to see the feed</h1>;
+  }
+
+  return <></>;
 };
 
 export default HomePage;
