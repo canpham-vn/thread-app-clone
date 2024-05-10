@@ -30,7 +30,7 @@ const MAX_CHAR = 500;
 const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showToast = useShowToast();
-  const { user } = useRecoilValue(userAtom);
+  const user = useRecoilValue(userAtom);
 
   const [updating, setUpdating] = useState(false);
 
