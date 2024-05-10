@@ -1,7 +1,7 @@
-import { Button, Flex, Spinner } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import useShowToast from "../hooks/useShowToast";
+import Post from "../components/Post";
 
 const HomePage = () => {
   const showToast = useShowToast();
@@ -44,7 +44,13 @@ const HomePage = () => {
     return <h1>Follow some users to see the feed</h1>;
   }
 
-  return <></>;
+  return (
+    <>
+      {posts.map((post) => (
+        <Post key={post._id} post={post} postedBy={post.postedBy} />
+      ))}
+    </>
+  );
 };
 
 export default HomePage;
