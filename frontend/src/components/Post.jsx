@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
@@ -10,6 +10,13 @@ const Post = ({ post, postedBy }) => {
   const [user, setUser] = useState(null);
 
   const showToast = useShowToast();
+
+  const navigate = useNavigate();
+
+  const navigateToUserPage = (e) => {
+    e.preventDefault();
+    navigate(`/${user.username}`);
+  };
 
   useEffect(() => {
     console.log("get user ");
@@ -40,7 +47,12 @@ const Post = ({ post, postedBy }) => {
     <Link to={`/${user.username}/post/${post._id}`}>
       <Flex gap={3} mb={4} py={5}>
         <Flex flexDirection={"column"} alignItems={"center"}>
-          <Avatar size='md' name={user.name} src={user.profilePic} />
+          <Avatar
+            size='md'
+            name={user.name}
+            src={user.profilePic}
+            onClick={navigateToUserPage}
+          />
           <Box w='1px' h={"full"} bg='gray.light' my={2}></Box>
           <Box position={"relative"} w={"full"}>
             {post.replies.length === 0 && <Text textAlign={"center"}>🥱</Text>}
@@ -84,7 +96,11 @@ const Post = ({ post, postedBy }) => {
         <Flex flex={1} flexDirection='column' gap={2}>
           <Flex justifyContent='space-between' w='full'>
             <Flex w='full' alignItems='center'>
-              <Text fontSize='sm' fontWeight='bold'>
+              <Text
+                fontSize='sm'
+                fontWeight='bold'
+                onClick={navigateToUserPage}
+              >
                 {user.name}
               </Text>
               <Image src='/verified.png' w={4} h={4} ml={1} />
