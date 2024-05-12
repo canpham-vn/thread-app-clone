@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
+import { formatDistanceToNow } from "date-fns";
 
 const Post = ({ post, postedBy }) => {
   const [liked, setLiked] = useState(false);
@@ -106,8 +107,8 @@ const Post = ({ post, postedBy }) => {
               <Image src='/verified.png' w={4} h={4} ml={1} />
             </Flex>
             <Flex gap={4} alignItems='center'>
-              <Text fontSize='sm' color='gray.light'>
-                1d
+              <Text fontSize='xs' color='gray.light' w={36} textAlign='right'>
+                {formatDistanceToNow(new Date(post.createdAt))} ago
               </Text>
               <BsThreeDots />
             </Flex>
