@@ -19,7 +19,6 @@ const Post = ({ post, postedBy }) => {
   };
 
   useEffect(() => {
-    console.log("get user ");
     const getUser = async () => {
       try {
         const res = await fetch(`/api/users/profile/${postedBy}`);
