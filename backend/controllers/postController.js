@@ -19,6 +19,25 @@ const getPost = async (req, res) => {
   }
 };
 
+const getUserPosts = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const userPosts = await Post.find({ postedBy: user._id }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(userPosts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    console.log("Error: " + error.message);
+  }
+};
+
 const getFeedPosts = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -162,6 +181,7 @@ const replyToPost = async (req, res) => {
 export {
   createPost,
   getPost,
+  getUserPosts,
   deletePost,
   likeUnlikePost,
   replyToPost,
