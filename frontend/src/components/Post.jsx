@@ -134,7 +134,11 @@ const Post = ({ post, postedBy }) => {
               </Text>
 
               {currentUser?._id === user._id && (
-                <DeleteIcon size={20} onClick={handleDeletePost} />
+                <DeleteIcon
+                  size={20}
+                  cursor='pointer'
+                  onClick={handleDeletePost}
+                />
               )}
             </Flex>
           </Flex>
