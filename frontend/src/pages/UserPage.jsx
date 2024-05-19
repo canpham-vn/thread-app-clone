@@ -5,11 +5,13 @@ import useShowToast from "../hooks/useShowToast";
 import { Flex, Spinner } from "@chakra-ui/react";
 import Post from "../components/Post";
 import useGetUserProfile from "../hooks/useGetUserProfile";
+import { useRecoilState } from "recoil";
+import postsAtom from "../atoms/postsAtom";
 
 const UserPage = () => {
   const { username } = useParams();
   const showToast = useShowToast();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useRecoilState(postsAtom);
   const [fetchingPosts, setFetchingPosts] = useState(false);
   const { user, isLoading } = useGetUserProfile();
 
@@ -32,7 +34,7 @@ const UserPage = () => {
       }
     };
     getPosts();
-  }, [showToast, username]);
+  }, [setPosts, showToast, username]);
 
   if (!user && isLoading) {
     return (
@@ -56,7 +58,7 @@ const UserPage = () => {
       {!fetchingPosts && posts.length === 0 && <h1>User has no posts</h1>}
 
       {posts.map((post) => (
-        <Post key={post._id} post={post} setPosts={setPosts} />
+        <Post key={post._id} post={post} />
       ))}
     </>
   );
