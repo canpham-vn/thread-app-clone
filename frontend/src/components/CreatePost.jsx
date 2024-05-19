@@ -22,8 +22,9 @@ import { useRef, useState } from "react";
 import usePreviewImg from "../hooks/usePreviewImg";
 import { BsFillImageFill } from "react-icons/bs";
 import useShowToast from "../hooks/useShowToast";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
+import postsAtom from "../atoms/postsAtom";
 
 const MAX_CHAR = 500;
 
@@ -31,6 +32,7 @@ const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showToast = useShowToast();
   const user = useRecoilValue(userAtom);
+  const [posts, setPosts] = useRecoilState(postsAtom);
 
   const [updating, setUpdating] = useState(false);
 
@@ -75,6 +77,7 @@ const CreatePost = () => {
       }
 
       showToast("Success", "Post created successfully", "success");
+      setPosts([...posts, data]);
       onClose();
       setPostText("");
       setImgUrl(null);
@@ -89,13 +92,13 @@ const CreatePost = () => {
     <>
       <Button
         position='fixed'
-        bottom='30px'
-        right='30px'
-        leftIcon={<AddIcon />}
+        bottom={10}
+        right={5}
         bg={useColorModeValue("gray.300", "gray.dark")}
         onClick={onOpen}
+        size={{ base: "sm", sm: "md" }}
       >
-        Post
+        <AddIcon />
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
