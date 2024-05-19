@@ -8,7 +8,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 
-const Post = ({ post, postedBy }) => {
+const Post = ({ post, setPosts }) => {
   const [user, setUser] = useState(null);
 
   const showToast = useShowToast();
@@ -37,6 +37,7 @@ const Post = ({ post, postedBy }) => {
       }
 
       showToast("Success", "Post deleted", "success");
+      setPosts((prev) => prev.filter((p) => p._id !== post._id));
     } catch (error) {
       showToast("Error", error, "error");
     }
@@ -45,7 +46,7 @@ const Post = ({ post, postedBy }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`/api/users/profile/${postedBy}`);
+        const res = await fetch(`/api/users/profile/${post.postedBy}`);
         const data = await res.json();
 
         if (data.error) {
@@ -60,7 +61,7 @@ const Post = ({ post, postedBy }) => {
     };
 
     getUser();
-  }, [postedBy, showToast]);
+  }, [post, showToast]);
 
   if (user === null) {
     return null;

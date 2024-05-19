@@ -56,7 +56,7 @@ const UserPage = () => {
       {!fetchingPosts && posts.length === 0 && <h1>User has no posts</h1>}
 
       {posts.map((post) => (
-        <Post key={post._id} post={post} postedBy={post.postedBy} />
+        <Post key={post._id} post={post} setPosts={setPosts} />
       ))}
     </>
   );
